@@ -167,6 +167,22 @@ var _ = {};
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
+    var last, isArg3 = (arguments[2] != undefined);
+    if(Array.isArray(collection)){
+      isArg3 ? (last = accumulator) : (last = collection[0]);
+      for(var i=0; i<collection.length;i++){
+        last = iterator(last, collection[i]);
+      };
+    }
+    else
+    {
+      var keys = Object.keys(collection);
+      isArg3 ? (last = accumulator) : (last = collection[keys[0]]);
+      for(var i=0;i<keys.length;i++){
+        last = iterator(last, collection[keys[i]]);
+      };
+    };
+    return last;
   };
 
   // Determine if the array or object contains a given value (using `===`).
