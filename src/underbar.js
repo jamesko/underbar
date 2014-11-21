@@ -251,6 +251,13 @@ var _ = {};
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    var fromObjects = _.map(arguments, _.identity).slice(1);
+    _.each(fromObjects, function(nextObject){
+      _.each(nextObject, function(v,k){
+        if(Object.keys(obj).indexOf(k) == -1){obj[k] = v};
+      });
+    });
+    return obj;
   };
 
 
